@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+    min-height: 100vh;
+}
+
+#chat {
+    min-height: calc(100vh - (90px + 125px));
+}

@@ -1,3 +1,5 @@
 'use strict';
 
-console.log('oi');
+import {initialMessagesFromBot} from './message';
+
+initialMessagesFromBot();

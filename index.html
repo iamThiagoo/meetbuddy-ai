@@ -4,42 +4,67 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="src/css/main.css">
-		<title>MyMeetingSupport</title>
+		<title>MeetBuddy - Feito para Reuniões!</title>
   	</head>
   	<body>
 		<div id="app" class="w-screen">
 			<div class="w-full rounded-lg shadow-lg">
-				<div class="flex items-center justify-between px-5 py-5 bg-white border-b-2">
+				
+				<div class="flex items-center justify-between px-4 py-5 bg-white border-b-2">
 					<div class="container flex items-center justify-between mx-auto">
-						<div class="text-2xl font-semibold">
-							MyMeetingSupport
-						</div>
-						<div class="flex flex-row items-center gap-4">
-							<h2 class="font-medium">
-								Seja bem-vindo(a) Thiago Ferreira	
-							</h2>
-							<div class="flex items-center justify-center w-12 h-12 p-2 font-semibold text-white bg-yellow-500 rounded-full">
-								TF
+						<h1 class="flex items-center text-2xl font-bold">
+							;) MeetBuddy<span class="text-cyan-700">AI</span> - Feito para Reuniões.
+							<img src="src\images\openai.svg" class="ml-3 -mt-3.5" height="110px" width="110px" />
+						</h1>
+
+						<div class="flex gap-x-7">
+							<button 
+								title="Alternar tema"
+								onclick="(() => document.body.classList.toggle('dark'))()"
+								class="w-12 h-12 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+							>
+								<svg class="block fill-violet-700 dark:hidden" fill="currentColor" viewBox="0 0 20 20">
+									<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+								</svg>
+								<svg class="hidden fill-yellow-500 dark:block" fill="currentColor" viewBox="0 0 20 20">
+									<path
+										d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+										fill-rule="evenodd" clip-rule="evenodd"></path>
+								</svg>
+							</button>
+							  
+							<div class="flex flex-row items-center gap-4">
+								<h2 class="font-medium">
+									Seja bem-vindo(a) Usuário Anônimo!
+								</h2>
+								<div class="flex items-center justify-center w-12 h-12 p-2 font-semibold text-white bg-yellow-500 rounded-full">
+									UA
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				
 				<div class="container w-full py-5 mx-auto bg-white">
 					<div id="chat"></div>
-					<form action="POST" id="sendMessage" class="relative border-t-2">
-						<input class="w-full px-3 py-5 mt-4 bg-gray-300 border-black rounded-xl" type="text" placeholder="Digite sua mensagem aqui..." />
-						<button class="absolute flex items-center justify-center w-10 h-10 bg-white rounded-lg cursor-pointer top-7 right-16 hover:bg-gray-300">
+				</div>
+				
+				<div class="fixed w-full bg-white border-t-2 bottom-4">
+					<form action="POST" id="sendMessage" class="container relative mx-auto">
+						<input class="w-full px-3 py-5 mt-4 bg-gray-300 border-black outline-offset-2 rounded-xl" type="text" placeholder="Digite sua mensagem aqui..." />
+						<button title="Iniciar gravação de aúdio" class="ease-in duration-300 hover:bg-[#636363] hover:text-white absolute flex items-center justify-center w-10 h-10 bg-white rounded-lg cursor-pointer top-7 right-16">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
 							</svg>							  
 						</button>
-						<button class="absolute flex items-center justify-center w-10 h-10 bg-white rounded-lg cursor-pointer top-7 right-4 hover:bg-gray-300">
+						<button title="Enviar mensagem" class="ease-in duration-300 hover:bg-[#636363] hover:text-white absolute flex items-center justify-center w-10 h-10 bg-white rounded-lg cursor-pointer top-7 right-4">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
 								<path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
 							</svg>
 						</button>
 					</form>
 				</div>
+				
 			</div>
 		</div>
 		<script type="module" src="src/js/main.js"></script>

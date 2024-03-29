@@ -1,9 +1,23 @@
+/*
+ * Imports
+ */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+/*
+ * Tailwind
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.ml-12 {
+    margin-left: 3rem; /* 48px */
+}
+
+
+/*
+ * General
+ */
 * {
     font-family: "Poppins", 'roboto' !important;
 }
@@ -12,6 +26,82 @@ html {
     min-height: 100vh;
 }
 
+
+/*
+ * Chat
+ */
 #chat {
     min-height: calc(100vh - (90px + 125px));
+}
+
+
+/*
+ * Typing animation
+ */
+.type-anim {
+    animation: blink-caret .75s step-end infinite;
+    overflow: hidden;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    margin: 0 auto;
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange; }
+}
+
+
+/*
+ * Dots
+ */
+.dot-flashing {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    left: 13px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #ffffff;
+    animation: dot-flashing 1s infinite linear alternate;
+    animation-delay: 0.5s;
+    padding: 5px 0px;
+}
+
+.dot-flashing::before, .dot-flashing::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 0;
+}
+
+.dot-flashing::before {
+    left: -15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #ffffff;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 0s;
+}
+
+.dot-flashing::after {
+    left: 15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #ffffff;
+    animation: dot-flashing 1s infinite alternate;
+    animation-delay: 1s;
+}
+
+@keyframes dot-flashing {
+    0% {
+        background-color: #ffffff;
+    }
+    50%, 100% {
+        background-color: rgba(152, 128, 255, 0.2);
+    }
 }

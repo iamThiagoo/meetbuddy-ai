@@ -1,17 +1,15 @@
-export function initialMessagesFromBot() {
-
+export async function initialMessagesFromBot() {
     // First message
-    addOpenAiMessageOnChat('Olá, sou o <strong>Meet</strong>! É um prazer em te conhecer 😄');
+    await addOpenAiMessageOnChat('Olá, sou o Meet! É um prazer em te conhecer 😄');
 
     // Second message
-    addOpenAiMessageOnChat('Meu objetivo <strong> é ajudar você a anotar tudo sobre a sua Reunião </strong>, para isso indico gravar um aúdio, clicando no botão <strong>"Iniciar gravação de aúdio"</strong>, localizado logo abaixo.');
+    await addOpenAiMessageOnChat('Meu objetivo  é ajudar você a anotar tudo sobre a sua Reunião, para isso indico gravar um aúdio, clicando no botão "Iniciar gravação de aúdio", localizado logo abaixo.');
 
     // Third message
-    addOpenAiMessageOnChat('Quando acabar, clique em <strong>"Enviar aúdio"</strong> que retornarei um resumo completo sobre ela.');
+    await addOpenAiMessageOnChat('Quando acabar, clique em "Enviar aúdio" que retornarei um resumo completo sobre ela.');
 
     // Fourth message
-    addOpenAiMessageOnChat('Havendo algum ajuste, me avise que ajustaremos para você!');
-    
+    await addOpenAiMessageOnChat('Havendo algum ajuste, me avise que ajustaremos para você!');
 }
 
 
@@ -26,7 +24,7 @@ export function createUserMessageHtml(message) {
     <div class="flex justify-end w-6/12 mb-4 user-message">
         <div class="px-4 py-3 mr-2 text-white bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl"> ${message} </div>
         <img
-            src="/images/bot.png"
+            src="/images/bot.jpg"
             class="object-cover w-8 h-8 rounded-full"
             alt=""
         />
@@ -48,7 +46,6 @@ export function addUserMessageOnChat(message) {
     
     let chatElement = document.querySelector("#chat");
     let chatElementContent = document.querySelector("#chat").innerHTML ?? '';
-
     let messageHtml = createUserMessageHtml(message);
 
     chatElement.innerHTML = chatElementContent + messageHtml;
@@ -61,17 +58,61 @@ export function addUserMessageOnChat(message) {
  * @param {string} message 
  * @returns {string}
  */
-export function createOpenAiMessageHtml(message) {
+export function createOpenAiBoxMessageHtml() {
 
     let html = `
     <div class="flex justify-start mb-4 w-6/12 bot-message">
-        <img src="/src/images/bot.png" class="ease-out duration-300 relative top-8 object-cover w-10 h-10 rounded-full" alt="" />
-        <div class="px-4 py-3 ml-2 text-white bg-cyan-700 rounded-br-3xl rounded-tr-3xl rounded-tl-lg">
-            ${message}
+        <img src="/src/images/bot.jpg" class="ease-out duration-300 relative top-8 object-cover w-10 h-10 rounded-full" alt="" />
+        <div class="message px-4 py-3 ml-2 text-white bg-cyan-700 rounded-br-3xl rounded-tr-3xl rounded-tl-lg" style="width: 10%">
+            
+            <!-- Dots Loaders -->
+            <span class="block py-1.5 dots-loader">
+                <div class="snippet" data-title="dot-flashing">
+                    <div class="stage">
+                        <div class="dot-flashing"></div>
+                    </div>
+                </div>
+            </span>
+
         </div>
     </div>`;
 
     return html;
+}
+
+
+/**
+ * 
+ */
+export async function insertMessageInBoxOpenAi(message) {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            let messages = document.querySelectorAll('.bot-message .message');
+            let lastMessage = messages[messages.length - 1];
+
+            let dots = lastMessage.querySelector('.dots-loader');
+
+            if (dots) {
+                dots.remove();
+            }
+
+            typeMessage(lastMessage, message, 40).then( () => {
+                resolve();
+            });
+        }, 2000);
+    });
+}
+    
+    
+async function typeMessage(element, message, delay) {    
+    element.classList.add('type-anim');
+    element.style.removeProperty('width');
+    element.style.maxWidth = '100%';
+    
+    for (let i = 0; i < message.length; i++) {
+        element.innerHTML += message[i];
+        await new Promise(resolve => setTimeout(resolve, delay));
+    }
 }
 
 
@@ -109,7 +150,7 @@ function addBotPhotoToLastConsecutiveBotMessages() {
                     }
                 } else {
                     // Adiciona a foto do bot na última mensagem consecutiva
-                    currentMessage.insertAdjacentHTML('afterbegin', '<img src="/src/images/bot.png" class="ease-out duration-300 relative top-8 object-cover w-10 h-10 rounded-full" alt="">');
+                    currentMessage.insertAdjacentHTML('afterbegin', '<img src="/src/images/bot.jpg" class="ease-out duration-300 relative top-8 object-cover w-10 h-10 rounded-full" alt="">');
                     break;
                 }
             }
@@ -124,13 +165,21 @@ function addBotPhotoToLastConsecutiveBotMessages() {
  * @param {string} message
  * @returns 
  */
-export function addOpenAiMessageOnChat(message) {
-    if (!message) message = 'Não foi possível receber resposta do ChatGPT';
+export async function addOpenAiMessageOnChat(message) {
+    return new Promise(resolve => {
+        if (!message) message = 'Não foi possível receber resposta do ChatGPT';
 
-    let chatElement = document.querySelector("#chat");
-    let messageHtml = createOpenAiMessageHtml(message);
+        let chatElement = document.querySelector("#chat");
 
-    chatElement.insertAdjacentHTML('beforeend', messageHtml);
+        // Insere a box da mensagem com dots
+        chatElement.insertAdjacentHTML('beforeend', createOpenAiBoxMessageHtml());
 
-    addBotPhotoToLastConsecutiveBotMessages();
+        // Verifica se é uma mensagem consecutiva do bot para esconder foto
+        addBotPhotoToLastConsecutiveBotMessages();
+        
+        // Insere a mensagem no box realizando a substituição dos dots
+        insertMessageInBoxOpenAi(message).then(() => {
+            resolve();
+        });
+    });
 }

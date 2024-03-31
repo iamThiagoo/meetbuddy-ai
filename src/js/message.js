@@ -21,13 +21,13 @@ export async function initialMessagesFromBot() {
  */
 export function createUserMessageHtml(message) {
     let html = `
-    <div class="flex justify-end w-6/12 mb-4 user-message">
+    <div class="flex justify-end w-full mb-4 user-message">
         <div class="px-4 py-3 mr-2 text-white bg-blue-400 rounded-bl-3xl rounded-tl-3xl rounded-tr-xl"> ${message} </div>
-        <img
-            src="/images/bot.jpg"
-            class="object-cover w-8 h-8 rounded-full"
-            alt=""
-        />
+        <div 
+            class="relative top-8 flex items-center text-sm justify-center w-10 h-10 p-2 font-semibold text-white bg-yellow-500 rounded-full"
+        >
+            UA
+        </div>
     </div>`;
 
     return html;
@@ -110,7 +110,7 @@ async function typeMessage(element, message, delay) {
     element.style.maxWidth = '100%';
     
     for (let i = 0; i < message.length; i++) {
-        element.innerHTML += message[i];
+        element.innerHTML += `${message[i]}`;
         await new Promise(resolve => setTimeout(resolve, delay));
     }
 }

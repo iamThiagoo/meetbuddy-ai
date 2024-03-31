@@ -11,7 +11,7 @@
 @tailwind utilities;
 
 .ml-12 {
-    margin-left: 3rem; /* 48px */
+    margin-left: 3rem !important; /* 48px */
 }
 
 
@@ -40,10 +40,6 @@ html {
  */
 .type-anim {
     animation: blink-caret .75s step-end infinite;
-    overflow: hidden;
-    border-right: .15em solid orange;
-    white-space: nowrap;
-    margin: 0 auto;
 }
 
 @keyframes blink-caret {

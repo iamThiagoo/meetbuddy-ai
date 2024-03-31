@@ -1,4 +1,4 @@
-let myAudio = {
+export let audio = {
     
     /**
      * start the recording audio

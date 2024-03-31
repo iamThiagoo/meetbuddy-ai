@@ -17,7 +17,6 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "openai": "^4.29.2"
+    "openai": "^4.31.0"
   }
 }

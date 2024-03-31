@@ -2165,6 +2165,10 @@ video {
   padding-bottom: 1.25rem;
 }
 
+.pr-28{
+  padding-right: 7rem;
+}
+
 .text-left{
   text-align: left;
 }
@@ -2224,6 +2228,11 @@ video {
 .text-2xl{
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .font-bold{
@@ -2677,7 +2686,7 @@ video {
 }
 
 .ml-12 {
-  margin-left: 3rem;
+  margin-left: 3rem !important;
   /* 48px */
 }
 
@@ -2707,10 +2716,6 @@ html {
 
 .type-anim {
   animation: blink-caret .75s step-end infinite;
-  overflow: hidden;
-  border-right: .15em solid orange;
-  white-space: nowrap;
-  margin: 0 auto;
 }
 
 @keyframes blink-caret {
